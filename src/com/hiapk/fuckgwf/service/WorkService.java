@@ -34,7 +34,7 @@ public class WorkService implements IService {
 	}
 
 	/**
-	 * 更新 Host 文件
+	 * 鏇存柊 Host 鏂囦欢
 	 * 
 	 * @param taskMark
 	 */
@@ -52,7 +52,7 @@ public class WorkService implements IService {
 				InputStream httpIs = httpResponse.getEntity().getContent();
 				httpBr = new BufferedReader(new InputStreamReader(httpIs));
 
-				// 无内容可更新
+				// 鏃犲唴瀹瑰彲鏇存柊
 				if (httpResponse.getEntity().getContentLength() == 1
 						&& httpBr.read() == '0') {
 					return mContext.getString(R.string.notification_no_update);
@@ -69,7 +69,7 @@ public class WorkService implements IService {
 				}
 
 				Set<String> keySet = hpNewHosts.keySet();
-				// 无内容
+				// 鏃犲唴瀹�
 				if (keySet.size() <= 0)
 					return mContext.getString(R.string.notification_no_update);
 
@@ -78,7 +78,7 @@ public class WorkService implements IService {
 					lastUpdate += key + " ";
 				}
 
-				// 挂载系统读写失败
+				// 鎸傝浇绯荤粺璇诲啓澶辫触
 				if (HelperUtils.rootCMD(mContext
 						.getString(R.string.cmd_remount_system)) != 0) {
 
@@ -86,7 +86,7 @@ public class WorkService implements IService {
 							.getString(R.string.notification_update_failed);
 				}
 
-				// 创建临时文件失败
+				// 鍒涘缓涓存椂鏂囦欢澶辫触
 				String tmpFileName = ContentUtil.HostsPath + ".tmp";
 				if (HelperUtils.rootCMD("echo '' > " + tmpFileName) != 0) {
 					return mContext
@@ -133,7 +133,7 @@ public class WorkService implements IService {
 				fos.close();
 				bis.close();
 
-				// 重命名失败
+				// 閲嶅懡鍚嶅け璐�
 				if (HelperUtils.rootCMD("mv " + tmpFileName + " "
 						+ ContentUtil.HostsPath) != 0) {
 					return mContext
